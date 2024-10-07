@@ -19,7 +19,51 @@ Here's what you can expect from Imago once you install it on your machine and ge
 
 ## Installation
 
-Let's just cut to the chase, you want to know how to install this bad boy, don't you? Well then head over to the [tutorial page](https://docs.jacktek.net/imago) for a detailed setup walkthrough!
+Let's just cut to the chase, you want to know how to install this bad boy, don't you? Well then head over to the **MISSING* [tutorial page](https://docs.jacktek.net/imago) for a detailed setup walkthrough!
+
+Assuming a virtual environment:
+
+    python -m pip install -r requirements.txt
+    # Successfully installed Jinja2-3.1.4 MarkupSafe-2.1.5 PyYAML-6.0.2 Werkzeug-3.0.4 attrdict-2.0.1 blinker-1.8.2 click-8.1.7 colorama-0.4.6 flask-3.0.3 itsdangerous-2.2.0 mistune-2.0.0a4 pillow-10.4.0 pyfiglet-1.0.2 pygments-2.18.0 six-1.16.0 termcolor-2.4.0
+    cd website
+    # TODO edit config.... config.yml (copy sample into file named; config.yml)
+
+then hack - FIXME fix or use different tool
+
+    attrdict/mapping.py
+    attrdict/mixins.py
+    attrdict/*
+
+Old:
+    from collections import Mapping
+
+New:
+    from collections.abc import Mapping
+
+    python site.py
+
+Demo URL shorten:
+
+    {"url": "http://google.com"}
+
+    curl -vX POST http://localhost:9863/api/shorten --header "Content-Type: application/json" --header "Authorization: Master youshallnotpass"  -d @\tmp\d.json
+
+result
+
+    https://localhost:9863/u/b8H
+
+
+Demo File upload:
+
+    curl -vX POST http://localhost:9863/api/upload --header "Authorization: Master youshallnotpass"  -F "upload=@\tmp\d.json"
+
+Field	Value
+Destination type	Image uploader; File uploader; Text uploader
+URL	https://example.com/api/upload
+Method	POST
+Body	Form data (multipart/form-data)
+File form name	upload
+Headers (key: value)	Authorization: your api token
 
 ## Compression
 

@@ -1,10 +1,12 @@
 attrdict
 flask
-gevent
+#gevent
 mistune==2.0.0a4
 pillow
-Psycopg2
+#Psycopg2
 pygments
 pyfiglet
 PyYAML
 termcolor
+# colorama - only for Windows and CMD.exe
+colorama

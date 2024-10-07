@@ -1,5 +1,8 @@
 # Copyright (C) JackTEK 2018-2020
 # -------------------------------
+"""be better to use sqlalcmhy or some sot of query translator
+for now had code to sqlite3
+"""
 
 # ========================
 # Import PATH dependencies
@@ -9,6 +12,7 @@
 # -----------------
 import os.path
 
+from contextlib import closing
 from datetime import datetime
 from re import match
 from os import remove, rename, replace
@@ -24,7 +28,7 @@ from flask import abort, jsonify, make_response, render_template, request, redir
 import util.utilities as utils
 
 from util.blueprints import File, URL, User
-from util.constants import app, cache, config, const, epoch, markdown, postgres
+from util.constants import app, cache, config, const, epoch, markdown, database_connection
 
 
 BASE = "/api"
@@ -160,7 +164,7 @@ def shorten_url():
     if not (user.admin and config.url_shortening.custom_url.admin_only) or not key:
         key = utils.generate_key(cache_obj="urls")
 
-    with postgres.cursor() as con:
+    with closing(database_connection.cursor()) as con:
         query = """INSERT INTO urls (owner_id, key, url, created_at)
                    VALUES (%(owner_id)s, %(key)s, %(url)s, %(created_at)s)
                    
@@ -214,7 +218,7 @@ def upload_file():
                                                           user=user):
         utils.optimise_image(key=key)
 
-    with postgres.cursor() as con:
+    with closing(database_connection.cursor()) as con:
         query = """INSERT INTO files (owner_id, key, created_at)
                    VALUES (%(owner_id)s, %(key)s, %(created_at)s)
                    
@@ -265,7 +269,7 @@ def delete_url(url_key: str):
         return utils.respond(code=403,
                              msg="You don't own this URL.")
 
-    with postgres.cursor() as con:
+    with closing(database_connection.cursor()) as con:
         query = """DELETE FROM urls
                    WHERE key = %(key)s;"""
 
@@ -305,7 +309,7 @@ def delete_file(filename: str):
        or (user.admin and file.owner.admin and user.id != file.owner.id and user.id != const.superuser.id):
         return utils.respond(code=403,
                              msg="You don't own this file.")
-    with postgres.cursor() as con:
+    with closing(database_connection.cursor()) as con:
         query = """DELETE FROM files
                     WHERE key = %(key)s;"""
 
@@ -456,7 +460,7 @@ def new_user():
                            created_at=datetime.utcnow(),
                            token=utils.generate_token())
 
-    with postgres.cursor() as con:
+    with closing(database_connection.cursor()) as con:
         query = """INSERT INTO users (username, password, admin, token, created_at)
                    VALUES (%(username)s, %(password)s, %(admin)s, %(token)s, %(created_at)s)
                    
@@ -509,7 +513,7 @@ def delete_user():
         return utils.respond(code=403,
                              msg="You cannot delete the user.")
 
-    with postgres.cursor() as con:
+    with closing(database_connection.cursor()) as con:
         query = """DELETE FROM users
                    WHERE id = %(id)s;"""
 
@@ -590,7 +594,7 @@ def edit_user():
                       
     new_values.update(new_stuff)
 
-    with postgres.cursor() as con:
+    with closing(database_connection.cursor()) as con:
         query = """UPDATE users
                    SET username = %(username)s,
                    password = %(password)s,
@@ -648,7 +652,7 @@ def reset_token():
 
     new_token = utils.generate_token()
                       
-    with postgres.cursor() as con:
+    with closing(database_connection.cursor()) as con:
         query = """UPDATE users
                    SET token = %(token)s
                    WHERE id = %(id)s;"""

@@ -12,7 +12,7 @@ from datetime import datetime
 # ------------------------
 # Third-party dependencies
 # ------------------------
-from attrdict import AttrDict
+from attrdict import AttrDict  # this does NOT appear to support Python 3.3+ certainly not Python 3.12
 from custos import version
 from mistune import create_markdown, escape, HTMLRenderer
 from pygments import highlight
@@ -55,7 +55,8 @@ version = version(major=4,
                   release="stable")
 
 app = None
-postgres = None
+#postgres = None
+database_connection = None
 
 
 class HighlightRenderer(HTMLRenderer):

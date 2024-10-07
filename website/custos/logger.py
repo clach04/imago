@@ -23,7 +23,8 @@ LOG_FORMAT = "{ts.day}-{ts.month}-{ts.year} {ts.hour}:{ts.minute}:{ts.second}:{t
 ORIGIN_FORMAT = "{file_name}.{func_name}"
 
 class Custos:
-    """This is a device used to easily print coloured text to the stdout without the need for messy code.
+    """FIXME either a shitty logger or set to NOT show useful tracebacks on error :-(
+    This is a device used to easily print coloured text to the stdout without the need for messy code.
     
     It also allows for a more authentic printing method if an instance of this class is assigned to a "console" variable, examples of how this would look are:
         console.info(text="Successfully started up!")

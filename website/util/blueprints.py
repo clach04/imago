@@ -1,6 +1,8 @@
 # Copyright (C) JackTEK 2018-2020
 # -------------------------------
 
+import datetime
+
 # ========================
 # Import PATH dependencies
 # ========================
@@ -46,7 +48,15 @@ class URL(blueprint):
         self.key = url_data.pop("key")
         self.url = url_data.pop("url")
 
+        print('DEBUG PRE  url_data %r' % url_data)
         self.created_at = url_data.pop("created_at")
+        # FIXME without correct types/sqlite mapping get a string and NOT a datetime
+        if isinstance(self.created_at, str):
+            #self.created_at = datetime.datetime(self.created_at)
+            d = self.created_at
+            self.created_at = datetime.datetime(*map(int, d.replace('.', ' ').replace(':', ' ').replace('-', ' ').split()))  # FIXME find my other code for this
+        print('DEBUG POST url_data %r' % url_data)
+        print('DEBUG self.created_at %r' % self.created_at)
 
         self.created_at_friendly = self.created_at.strftime("%d/%m/%Y %H:%M")
 

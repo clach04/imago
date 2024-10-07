@@ -83,3 +83,6 @@ postgres:
   host: 127.0.0.1
 
   database: imago
+
+sqlite3:
+  database: imago

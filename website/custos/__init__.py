@@ -39,6 +39,16 @@ except ImportError as error:
     
     os._exit(status=2)
 
+try:
+    import colorama
+    try:
+        colorama.just_fix_windows_console()
+    except AttributeError:
+        # older version, for example '0.4.4'
+        colorama.init()
+except ImportError:
+    colorama = None
+
 # ============================================
 # This is for semantic versioning (aka semver)
 # ============================================
