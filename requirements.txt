@@ -1,4 +1,5 @@
-attrdict
+#attrdict  # attrdict-2.0.1 fails with Python 3.12
+git+https://github.com/akitenkrad/attrdict.git  # needed for Python 3.3+ support, e.g. Python 3.12
 flask
 #gevent
 mistune==2.0.0a4

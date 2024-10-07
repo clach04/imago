@@ -28,7 +28,8 @@ Assuming a virtual environment:
     cd website
     # TODO edit config.... config.yml (copy sample into file named; config.yml)
 
-then hack - FIXME fix or use different tool
+then hack - FIXME fix or use different lib than attrdict-2.0.1 (2019) https://pypi.org/project/attrdict/ - https://github.com/bcj/AttrDict is archived
+From quick inspection of repo https://github.com/akitenkrad/attrdict - looks like changes I made are already here.
 
     attrdict/mapping.py
     attrdict/mixins.py
